@@ -1,3 +1,30 @@
+<?php
+    require 'function.php';
+
+    // cek login terdaftar atau tidak
+    if (isset($_POST['user'])){
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $_SESSION['username'] = $username;
+
+        //cocokin dengan database ada atau tidak datanya
+        $cekdatabase = mysqli_query($conn, "SELECT * FROM user WHERE username='$username' and password='$password'");
+        //hitung jumlah data
+        $hitung = mysqli_num_rows($cekdatabase);
+        if ($hitung>0){
+            $_SESSION['log'] = 'true';
+            header('location:php/index.php');
+        } else {
+            header('location:index.php');
+        };
+    };
+
+    if (!isset($_SESSION['log'])){
+    }  else {
+        header('location:php/index.php');
+    }
+?>
+
 <!DOCTYPE html>
 <html
   lang="en"
@@ -62,7 +89,6 @@
             <div class="card-body">
               <!-- Logo -->
               <div class="app-brand justify-content-center">
-                <a href="index.html" class="app-brand-link gap-2">
                   <span class="app-brand-logo demo">
                     <svg
                       width="25"
@@ -125,15 +151,15 @@
               <h4 class="mb-2">Selamat Datang! 👋</h4>
               <p class="mb-4">Silahkan masukkan username dan password anda</p>
 
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+              <form id="formAuthentication" class="mb-3" method="post">
                 <div class="mb-3">
-                  <label for="email" class="form-label">Username</label>
+                  <label for="username" class="form-label">Username</label>
                   <input
-                    type="text"
+                    type="username"
                     class="form-control"
-                    id="email"
-                    name="email-username"
-                    placeholder="Enter your email or username"
+                    id="exampleInputUsername"
+                    name="username"
+                    placeholder="Enter your username"
                     autofocus
                   />
                 </div>
@@ -144,7 +170,7 @@
                   <div class="input-group input-group-merge">
                     <input
                       type="password"
-                      id="password"
+                      id="exampleInputPassword"
                       class="form-control"
                       name="password"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
@@ -156,15 +182,11 @@
                 <div class="mb-3">
                 </div>
                 <div class="mb-3">
-                <a href="html/index.html">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
-                </a>
+                  <button class="btn btn-primary d-grid w-100" type="submit" name="user">Login</button>
                 </div>
               </form>
             </div>
           </div>
-          <!-- /Register -->
-        </div>
       </div>
     </div>
 
