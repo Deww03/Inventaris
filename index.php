@@ -13,7 +13,7 @@
         $hitung = mysqli_num_rows($cekdatabase);
         if ($hitung>0){
             $_SESSION['log'] = 'true';
-            header('location:php/index.php');
+            header('location:home.php');
         } else {
             header('location:index.php');
         };
@@ -21,7 +21,7 @@
 
     if (!isset($_SESSION['log'])){
     }  else {
-        header('location:php/index.php');
+        header('location:home.php');
     }
 ?>
 
