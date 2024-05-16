@@ -4,8 +4,6 @@ require 'cek.php';
 ?>
 
 <!DOCTYPE html>
-
-<!-- beautify ignore:start -->
 <html
   lang="en"
   class="light-style layout-menu-fixed"
@@ -21,7 +19,7 @@ require 'cek.php';
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Inventaris</title>
+    <title>Stock Barang | Iventaris</title>
 
     <meta name="description" content="" />
 
@@ -46,8 +44,6 @@ require 'cek.php';
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-
-    <link rel="stylesheet" href="assets/vendor/libs/apex-charts/apex-charts.css" />
 
     <!-- Page CSS -->
 
@@ -135,22 +131,22 @@ require 'cek.php';
 
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
-            <li class="menu-item active">
+            <li class="menu-item">
               <a href="home.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Home</div>
               </a>
             </li>
-
             <!-- Tables -->
-            <li class="menu-item">
+            <li class="menu-item active">
               <a href="barang.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Tables">Barang</div>
               </a>
-            </li>         
+            </li>
           </ul>
         </aside>
+        <!-- / Menu -->
 
         <!-- Layout container -->
         <div class="layout-page">
@@ -259,33 +255,66 @@ require 'cek.php';
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <div class="row">
-                <div class="col-lg-12 mb-4 order-0">
-                  <div class="card">
-                    <div class="d-flex align-items-end row">
-                      <div class="col-sm-7">
-                        <div class="card-body">
-                          <h5 class="card-title text-primary">Selamat Datang Adam ! 🎉</h5>
-                          <p class="mb-4">
-                            Hari ini Hari Senin Tanggal 13 Mei 2024 Pukul 19:07
-                          </p>
+              <h4 class="fw-bold py-3 mb-4">Master Barang</h4>
 
-                        </div>
-                      </div>
-                      <div class="col-sm-5 text-center text-sm-left">
-                        <div class="card-body pb-0 px-0 px-md-4">
-                          <img
-                            src="assets/img/illustrations/man-with-laptop-light.png"
-                            height="140"
-                            alt="View Badge User"
-                            data-app-dark-img="illustrations/man-with-laptop-dark.png"
-                            data-app-light-img="illustrations/man-with-laptop-light.png"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <!-- Striped Rows -->
+              <div class="card">
+                <h5 class="card-header">Stock Barang</h5>
+                <div class="table-responsive text-nowrap">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>Nama</th>
+                        <th>Jenis</th>
+                        <th>Merk</th>
+                        <th>Stock</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                      
+                    <?php
+                            $ambilsemuadatastock = mysqli_query($conn, "SELECT * FROM barang");
+                            $i = 1;
+                            while ($data = mysqli_fetch_array($ambilsemuadatastock)) {
+                                $namabarang = $data['namabarang'];
+                                $jenis = $data['jenis'];
+                                $merk = $data['merk'];
+                                $stock = $data['stock'];
+                                $idb = $data['idbarang'];
+                            ?>
+
+                            <tr>
+                                <td><?=$i++;?></td>
+                                <td><?=$namabarang;?></td>
+                                <td><?=$jenis;?></td>
+                                <td><?=$merk;?></td>
+                                <td><?=$stock;?></td>
+                                <td>
+                                  <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                      <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                  <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="javascript:void(0);">
+                                      <i class="bx bx-edit-alt me-2"></i> Edit</a>
+                                    <a class="dropdown-item" href="javascript:void(0);">
+                                      <i class="bx bx-trash me-2"></i> Delete</a>
+                                  </div>
+                                  </div>
+                              </td>
+                            </tr>
+                            
+                            <?php
+                            };
+                            ?>
+                    </tbody>
+                  </table>
                 </div>
+              </div>
+              <!--/ Striped Rows -->
+            </div>
             <!-- / Content -->
 
             <!-- Footer -->
@@ -312,7 +341,8 @@ require 'cek.php';
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-   
+    <!-- / Layout wrapper -->
+
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="assets/vendor/libs/jquery/jquery.js"></script>
@@ -324,13 +354,11 @@ require 'cek.php';
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="assets/js/dashboards-analytics.js"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
